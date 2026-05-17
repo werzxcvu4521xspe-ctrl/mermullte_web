@@ -1,0 +1,344 @@
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  background-image: url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&q=80&w=2000');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 80px 0;
+}
+
+.heroOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(9, 10, 15, 0.45) 0%,
+    rgba(9, 10, 15, 0.7) 60%,
+    var(--bg-primary) 100%
+  );
+  z-index: 1;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+  color: var(--text-primary);
+  max-width: 800px;
+}
+
+.heroSub {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent-gold);
+  letter-spacing: 4px;
+  margin-bottom: 20px;
+}
+
+.heroTitle {
+  font-family: var(--font-serif);
+  font-size: clamp(36px, 5vw, 60px);
+  font-weight: 600;
+  line-height: 1.25;
+  margin-bottom: 24px;
+}
+
+.heroTitle span {
+  font-style: italic;
+  font-weight: 400;
+  background: linear-gradient(135deg, #fff7db 0%, var(--accent-gold) 60%, #b89228 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.heroDesc {
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: 40px;
+  max-width: 650px;
+}
+
+.heroBtnGroup {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btnGold {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 32px;
+  background: linear-gradient(135deg, #f8e3a1 0%, #e5c158 50%, #b89228 100%);
+  color: #0c0b08;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 40px;
+  box-shadow: 0 4px 20px rgba(229, 193, 88, 0.25);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btnGold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(229, 193, 88, 0.4);
+}
+
+.btnOutline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 32px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--text-primary);
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 40px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btnOutline:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Services Section */
+.services {
+  padding: 100px 0;
+  background-color: var(--bg-primary);
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.sectionSub {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent-gold);
+  letter-spacing: 3px;
+  margin-bottom: 12px;
+}
+
+.sectionTitle {
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 4vw, 38px);
+  font-weight: 600;
+}
+
+.servicesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+}
+
+.serviceCard {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 20px;
+  padding: 40px 30px;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.serviceCard:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.06);
+  transform: translateY(-5px);
+}
+
+.iconBox {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: rgba(229, 193, 88, 0.1);
+  color: var(--accent-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.serviceCard h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.serviceCard p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* Rooms Section */
+.rooms {
+  padding: 100px 0;
+  background: linear-gradient(to bottom, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+}
+
+.roomsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.roomCard {
+  border-radius: 24px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  min-height: 420px;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.roomCard:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.roomImgBox {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  min-height: 300px;
+}
+
+.roomImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s ease;
+}
+
+.roomCard:hover .roomImg {
+  transform: scale(1.05);
+}
+
+.priceTag {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  background: rgba(9, 10, 15, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--accent-gold);
+}
+
+.priceUnit {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+
+.roomInfo {
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.roomTitleBox {
+  margin-bottom: 20px;
+}
+
+.roomInfo h3 {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.engName {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent-gold);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.roomDesc {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 28px;
+}
+
+.amenities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+
+.amenityBadge {
+  font-size: 12px;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-secondary);
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 24px;
+}
+
+.capacityText {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.cardBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--accent-gold);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.cardBtn:hover {
+  color: var(--accent-gold-hover);
+}
+
+.cardBtn svg {
+  transition: transform 0.3s ease;
+}
+
+.cardBtn:hover svg {
+  transform: translateX(4px);
+}
+
+@media (max-width: 960px) {
+  .roomCard {
+    grid-template-columns: 1fr;
+  }
+  
+  .roomInfo {
+    padding: 32px;
+  }
+}
