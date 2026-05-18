@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Compass, Wind, Coffee, Award, Calendar, ChevronRight } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 import styles from './page.module.css';
 
 // Fallback rooms list for visually complete loading
@@ -38,7 +39,33 @@ const LUXURY_ROOMS = [
   }
 ];
 
-export default function Home() {
+export default async function Home() {
+  let rooms = [];
+  try {
+    const { data, error } = await supabase
+      .from('rooms')
+      .select('*')
+      .order('price_per_night', { ascending: true });
+
+    if (error || !data || data.length === 0) {
+      throw new Error(error?.message || 'Empty data');
+    }
+
+    rooms = data.map((room) => ({
+      id: room.id,
+      name: room.name.includes(' (') ? room.name.split(' (')[1].replace(')', '') : room.name,
+      koreanName: room.name.split(' (')[0],
+      description: room.description,
+      price: Number(room.price_per_night).toLocaleString(),
+      capacity: room.capacity,
+      image: room.image_url,
+      amenities: room.amenities || []
+    }));
+  } catch (err) {
+    console.log('Supabase rooms fetch failed, using mock rooms:', err.message);
+    rooms = LUXURY_ROOMS;
+  }
+
   return (
     <>
       <Navbar />
@@ -122,7 +149,7 @@ export default function Home() {
           </div>
           
           <div className={styles.roomsGrid}>
-            {LUXURY_ROOMS.map((room) => (
+            {rooms.map((room) => (
               <div key={room.id} className={`${styles.roomCard} glass`}>
                 <div className={styles.roomImgBox}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
