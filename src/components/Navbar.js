@@ -10,16 +10,45 @@ import styles from './Navbar.module.css';
 export default function Navbar() {
   const pathname = usePathname();
   const [user, setUser] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    // Check initial user
-    supabase.auth.getUser().then(({ data: { user } }) => {
+    // Check initial user and verify admin rights
+    const checkInitialUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
       setUser(user);
-    });
+      
+      if (user) {
+        const { data: adminRecord } = await supabase
+          .from('admins')
+          .select('*')
+          .eq('email', user.email)
+          .single();
+          
+        setIsAdmin(!!adminRecord);
+      } else {
+        setIsAdmin(false);
+      }
+    };
+
+    checkInitialUser();
 
     // Listen to Auth state changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user || null);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      const currentUser = session?.user || null;
+      setUser(currentUser);
+      
+      if (currentUser) {
+        const { data: adminRecord } = await supabase
+          .from('admins')
+          .select('*')
+          .eq('email', currentUser.email)
+          .single();
+          
+        setIsAdmin(!!adminRecord);
+      } else {
+        setIsAdmin(false);
+      }
     });
 
     return () => {
@@ -45,10 +74,12 @@ export default function Navbar() {
             <span>실시간 예약</span>
           </Link>
           
-          <Link href="/admin" className={`${styles.navLink} ${pathname.startsWith('/admin') ? styles.activeAdmin : ''}`}>
-            <LayoutDashboard size={18} />
-            <span>관리 대시보드</span>
-          </Link>
+          {isAdmin && (
+            <Link href="/admin" className={`${styles.navLink} ${pathname.startsWith('/admin') ? styles.activeAdmin : ''}`}>
+              <LayoutDashboard size={18} />
+              <span>관리 대시보드</span>
+            </Link>
+          )}
         </nav>
 
         <div className={styles.authWrapper}>
