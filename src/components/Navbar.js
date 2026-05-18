@@ -1,12 +1,31 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Hotel, Calendar, LayoutDashboard } from 'lucide-react';
+import { Hotel, Calendar, LayoutDashboard, LogOut, LogIn } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 import styles from './Navbar.module.css';
 
 export default function Navbar() {
   const pathname = usePathname();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    // Check initial user
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setUser(user);
+    });
+
+    // Listen to Auth state changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user || null);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
 
   return (
     <header className={styles.header}>
@@ -31,6 +50,39 @@ export default function Navbar() {
             <span>관리 대시보드</span>
           </Link>
         </nav>
+
+        <div className={styles.authWrapper}>
+          {user ? (
+            <div className={styles.userInfo}>
+              {user.user_metadata?.avatar_url ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img 
+                  src={user.user_metadata.avatar_url} 
+                  alt="avatar" 
+                  className={styles.avatar} 
+                />
+              ) : (
+                <div className={styles.avatarFallback}>
+                  {user.email?.substring(0, 2).toUpperCase()}
+                </div>
+              )}
+              <button 
+                onClick={async () => {
+                  await supabase.auth.signOut();
+                }} 
+                className={styles.logoutBtn}
+                title="로그아웃"
+              >
+                <LogOut size={16} />
+              </button>
+            </div>
+          ) : (
+            <Link href="/login" className={styles.loginBtn}>
+              <LogIn size={16} />
+              <span>로그인</span>
+            </Link>
+          )}
+        </div>
       </div>
     </header>
   );

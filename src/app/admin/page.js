@@ -1,16 +1,22 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { supabase } from '../../lib/supabase';
 import { 
   Users, Calendar, DollarSign, Check, X, Trash2, 
-  Search, ShieldAlert, Sparkles, Filter, RefreshCw 
+  Search, ShieldAlert, Sparkles, Filter, RefreshCw, LogOut
 } from 'lucide-react';
 import styles from './admin.module.css';
 
 export default function AdminDashboard() {
+  const router = useRouter();
+  const [user, setUser] = useState(null);
+  const [isApprovedAdmin, setIsApprovedAdmin] = useState(false);
+  const [checkingAuth, setCheckingAuth] = useState(true);
+
   const [reservations, setReservations] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
@@ -95,8 +101,42 @@ export default function AdminDashboard() {
   };
 
   useEffect(() => {
-    fetchReservations();
-  }, []);
+    const checkAuth = async () => {
+      setCheckingAuth(true);
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) {
+          // If no user is logged in, redirect to login page
+          router.push('/login');
+          return;
+        }
+        
+        setUser(user);
+
+        // Check if user is in the admins table in Supabase
+        const { data: adminRecord, error } = await supabase
+          .from('admins')
+          .select('*')
+          .eq('email', user.email)
+          .single();
+
+        if (error || !adminRecord) {
+          setIsApprovedAdmin(false);
+        } else {
+          setIsApprovedAdmin(true);
+          // Only fetch reservations if they are an approved admin!
+          fetchReservations();
+        }
+      } catch (err) {
+        console.error('Auth verification failed:', err);
+        setIsApprovedAdmin(false);
+      } finally {
+        setCheckingAuth(false);
+      }
+    };
+
+    checkAuth();
+  }, [router]);
 
   // Calculate statistics whenever reservations list updates
   useEffect(() => {
@@ -177,6 +217,60 @@ export default function AdminDashboard() {
     
     return matchesSearch && matchesStatus;
   });
+
+  if (checkingAuth) {
+    return (
+      <>
+        <Navbar />
+        <main className={styles.main}>
+          <div className={styles.authLoading}>
+            <RefreshCw size={44} className={styles.spin} />
+            <p>보안 세션을 확인 중입니다...</p>
+          </div>
+        </main>
+        <Footer />
+      </>
+    );
+  }
+
+  if (!isApprovedAdmin) {
+    return (
+      <>
+        <Navbar />
+        <main className={styles.main}>
+          <div className={`${styles.deniedCard} glass`}>
+            <ShieldAlert size={60} className={styles.deniedIcon} />
+            <h2>어드민 접근 권한 제한</h2>
+            <p className={styles.deniedNote}>
+              현재 로그인하신 구글 계정 <strong>({user?.email})</strong>은 사전 승인된 관리자 목록에 등록되어 있지 않습니다.
+            </p>
+            <p className={styles.instruction}>
+              관리자 페이지를 이용하시려면 최고 관리자 장유찬님에게 권한 승인을 요청해 주세요.
+            </p>
+            <div className={styles.deniedActions}>
+              <button 
+                onClick={async () => {
+                  await supabase.auth.signOut();
+                  router.push('/login');
+                }} 
+                className={styles.logoutBtn}
+              >
+                <LogOut size={16} />
+                <span>다른 계정으로 로그인</span>
+              </button>
+              <button 
+                onClick={() => router.push('/')} 
+                className={styles.homeBtn}
+              >
+                <span>홈페이지로 돌아가기</span>
+              </button>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </>
+    );
+  }
 
   return (
     <>
