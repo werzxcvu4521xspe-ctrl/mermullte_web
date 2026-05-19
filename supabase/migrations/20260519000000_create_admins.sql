@@ -43,5 +43,8 @@ CREATE TABLE IF NOT EXISTS public.admins (
 
 -- 5. 최고관리자 장유찬 구글 이메일 자동 등록 및 승인
 INSERT INTO public.admins (email, name)
-VALUES ('werzxcvu4521xspe-ctrl@gmail.com', '최고관리자 장유찬')
+VALUES 
+('werzxcvu4521xspe-ctrl@gmail.com', '최고관리자 장유찬(개발용)'),
+('werzxcvu4521xspe@gmail.com', '최고관리자 장유찬')
 ON CONFLICT (email) DO NOTHING;
+
