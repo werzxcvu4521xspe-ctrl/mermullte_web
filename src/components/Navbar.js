@@ -22,7 +22,7 @@ export default function Navbar() {
         const { data: adminRecord } = await supabase
           .from('admins')
           .select('*')
-          .eq('email', user.email)
+          .eq('email', user.email.toLowerCase())
           .single();
           
         setIsAdmin(!!adminRecord);
@@ -42,7 +42,7 @@ export default function Navbar() {
         const { data: adminRecord } = await supabase
           .from('admins')
           .select('*')
-          .eq('email', currentUser.email)
+          .eq('email', currentUser.email.toLowerCase())
           .single();
           
         setIsAdmin(!!adminRecord);

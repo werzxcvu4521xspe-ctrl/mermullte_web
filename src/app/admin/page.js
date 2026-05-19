@@ -124,7 +124,7 @@ export default function AdminDashboard() {
         const { data: adminRecord, error } = await supabase
           .from('admins')
           .select('*')
-          .eq('email', user.email)
+          .eq('email', user.email.toLowerCase())
           .single();
 
         if (error || !adminRecord) {
