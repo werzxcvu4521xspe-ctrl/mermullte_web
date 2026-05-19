@@ -121,15 +121,20 @@ export default function AdminDashboard() {
         setUser(user);
 
         // Check if user is in the admins table in Supabase
+        console.log('🔍 [ADMIN AUTH DEBUG] - Logged in Google Email:', user.email);
         const { data: adminRecord, error } = await supabase
           .from('admins')
           .select('*')
           .eq('email', user.email.toLowerCase())
           .single();
+          
+        console.log('🔍 [ADMIN AUTH DEBUG] - Database Match Result:', { adminRecord, error });
 
         if (error || !adminRecord) {
+          console.error('🔍 [ADMIN AUTH DEBUG] - Access Denied! Record not found or RLS policy blocked it:', error);
           setIsApprovedAdmin(false);
         } else {
+          console.log('🔍 [ADMIN AUTH DEBUG] - Access Granted! Approved Admin Record:', adminRecord);
           setIsApprovedAdmin(true);
           // Only fetch reservations and admins if they are an approved admin!
           fetchReservations();
