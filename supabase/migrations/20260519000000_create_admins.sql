@@ -1,8 +1,13 @@
 -- 20260519000000_create_admins.sql
--- Mermullet Hotel 통합 데이터베이스 스키마 설계 및 데이터 자동 주입
+-- Mermullet Hotel 통합 데이터베이스 스키마 설계 및 데이터 자동 주입 (충돌 방지 버전)
+
+-- 기존에 잘못 생성되어 컬럼 누락 등의 에러를 유발하는 구버전 테이블들을 깨끗하게 삭제합니다.
+DROP TABLE IF EXISTS public.reservations CASCADE;
+DROP TABLE IF EXISTS public.rooms CASCADE;
+DROP TABLE IF EXISTS public.admins CASCADE;
 
 -- 1. 객실(rooms) 테이블 생성
-CREATE TABLE IF NOT EXISTS public.rooms (
+CREATE TABLE public.rooms (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name TEXT NOT NULL,
     description TEXT,
@@ -20,7 +25,7 @@ VALUES
 ON CONFLICT (id) DO NOTHING;
 
 -- 3. 예약(reservations) 테이블 생성
-CREATE TABLE IF NOT EXISTS public.reservations (
+CREATE TABLE public.reservations (
     id TEXT PRIMARY KEY,
     room_id UUID REFERENCES public.rooms(id) ON DELETE SET NULL,
     room_name TEXT,
@@ -35,16 +40,15 @@ CREATE TABLE IF NOT EXISTS public.reservations (
 );
 
 -- 4. 승인된 관리자(admins) 테이블 생성
-CREATE TABLE IF NOT EXISTS public.admins (
+CREATE TABLE public.admins (
     email TEXT PRIMARY KEY,
     name TEXT,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
--- 5. 최고관리자 장유찬 구글 이메일 자동 등록 및 승인
+-- 5. 최고관리자 장유찬 실제 구글 이메일 등록 및 승인
 INSERT INTO public.admins (email, name)
 VALUES 
 ('werzxcvu4521xspe-ctrl@gmail.com', '최고관리자 장유찬(개발용)'),
 ('werzxcvu4521xspe@gmail.com', '최고관리자 장유찬')
 ON CONFLICT (email) DO NOTHING;
-
