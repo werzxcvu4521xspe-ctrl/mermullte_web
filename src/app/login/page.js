@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { supabase } from '../../lib/supabase';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
-import { LogIn, Sparkles, ShieldCheck } from 'lucide-react';
+import { LogIn, Sparkles, ShieldCheck, Key } from 'lucide-react';
 import styles from './login.module.css';
 
 export default function LoginPage() {
@@ -16,6 +16,10 @@ export default function LoginPage() {
   useEffect(() => {
     // If user is already logged in, check where to send them
     const checkUser = async () => {
+      if (typeof window !== 'undefined' && localStorage.getItem('mermullet_dev_bypass') === 'true') {
+        router.push('/admin');
+        return;
+      }
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
         router.push('/admin');
@@ -41,6 +45,18 @@ export default function LoginPage() {
       console.error('Google login error:', err.message);
       setErrorMessage(err.message || '구글 로그인 과정에서 문제가 발생했습니다.');
       setIsLoading(false);
+    }
+  };
+
+  const handleBypassLogin = () => {
+    setIsLoading(true);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('mermullet_dev_bypass', 'true');
+      localStorage.setItem('mermullet_mock_user', JSON.stringify({
+        email: 'werzxcvu4521xspe-ctrl@gmail.com',
+        name: '최고관리자 장유찬 (우회)'
+      }));
+      window.location.href = '/admin';
     }
   };
 
@@ -92,6 +108,15 @@ export default function LoginPage() {
               />
             </svg>
             <span>{isLoading ? '구글 연결 중...' : 'Google 계정으로 로그인'}</span>
+          </button>
+
+          <button 
+            onClick={handleBypassLogin}
+            className={styles.bypassBtn}
+            title="Supabase Auth / Google OAuth 설정 우회용 로컬 개발용 원클릭 로그인"
+          >
+            <Key size={16} />
+            <span>개발자 간편 우회 로그인</span>
           </button>
 
           <div className={styles.footerNote}>

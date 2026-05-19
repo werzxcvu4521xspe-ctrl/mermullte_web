@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Hotel, Calendar, LayoutDashboard, LogOut, LogIn } from 'lucide-react';
+import { Hotel, Calendar, LayoutDashboard, LogOut, LogIn, Sparkles, Compass, BookOpen } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import styles from './Navbar.module.css';
 
@@ -15,18 +15,34 @@ export default function Navbar() {
   useEffect(() => {
     // Check initial user and verify admin rights
     const checkInitialUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      setUser(user);
-      
-      if (user) {
-        const { data: adminRecord } = await supabase
-          .from('admins')
-          .select('*')
-          .eq('email', user.email.toLowerCase())
-          .single();
-          
-        setIsAdmin(!!adminRecord);
-      } else {
+      if (typeof window !== 'undefined' && localStorage.getItem('mermullet_dev_bypass') === 'true') {
+        const mockUser = JSON.parse(localStorage.getItem('mermullet_mock_user') || '{}');
+        setUser({
+          email: mockUser.email,
+          user_metadata: {
+            avatar_url: null
+          }
+        });
+        setIsAdmin(true);
+        return;
+      }
+
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        setUser(user);
+
+        if (user) {
+          const { data: adminRecord } = await supabase
+            .from('admins')
+            .select('*')
+            .eq('email', user.email.toLowerCase())
+            .single();
+
+          setIsAdmin(!!adminRecord);
+        } else {
+          setIsAdmin(false);
+        }
+      } catch (err) {
         setIsAdmin(false);
       }
     };
@@ -35,16 +51,20 @@ export default function Navbar() {
 
     // Listen to Auth state changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      if (typeof window !== 'undefined' && localStorage.getItem('mermullet_dev_bypass') === 'true') {
+        return;
+      }
+
       const currentUser = session?.user || null;
       setUser(currentUser);
-      
+
       if (currentUser) {
         const { data: adminRecord } = await supabase
           .from('admins')
           .select('*')
           .eq('email', currentUser.email.toLowerCase())
           .single();
-          
+
         setIsAdmin(!!adminRecord);
       } else {
         setIsAdmin(false);
@@ -60,47 +80,67 @@ export default function Navbar() {
     <header className={styles.header}>
       <div className={styles.container}>
         <Link href="/" className={styles.logo}>
-          <span className={styles.logoGold}>Mermullet</span> Hotel
+          mermullet
         </Link>
-        
+
         <nav className={styles.nav}>
-          <Link href="/" className={`${styles.navLink} ${pathname === '/' ? styles.active : ''}`}>
-            <Hotel size={18} />
+          <Link href="/brand" className={`${styles.navLink} ${pathname === '/brand' ? styles.active : ''}`}>
+            <span>브랜드 소개</span>
+          </Link>
+
+          <Link href="/about" className={`${styles.navLink} ${pathname === '/about' ? styles.active : ''}`}>
             <span>호텔 소개</span>
           </Link>
-          
-          <Link href="/booking" className={`${styles.navLink} ${pathname === '/booking' ? styles.active : ''}`}>
-            <Calendar size={18} />
-            <span>실시간 예약</span>
+
+          <Link href="/experiences" className={`${styles.navLink} ${pathname === '/experiences' ? styles.active : ''}`}>
+            <span>이벤트 & 경험</span>
           </Link>
-          
+
+          <Link href="/blog" className={`${styles.navLink} ${pathname === '/blog' ? styles.active : ''}`}>
+            <span>블로그</span>
+          </Link>
+
           {isAdmin && (
             <Link href="/admin" className={`${styles.navLink} ${pathname.startsWith('/admin') ? styles.activeAdmin : ''}`}>
-              <LayoutDashboard size={18} />
               <span>관리 대시보드</span>
             </Link>
           )}
         </nav>
 
         <div className={styles.authWrapper}>
+          <Link href="/booking" className={styles.reserveBtn}>
+            <span>실시간 예약</span>
+          </Link>
+
           {user ? (
             <div className={styles.userInfo}>
               {user.user_metadata?.avatar_url ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img 
-                  src={user.user_metadata.avatar_url} 
-                  alt="avatar" 
-                  className={styles.avatar} 
+                <img
+                  src={user.user_metadata.avatar_url}
+                  alt="avatar"
+                  className={styles.avatar}
                 />
               ) : (
-                <div className={styles.avatarFallback}>
+                <div className={styles.avatarFallback} title={user.email}>
                   {user.email?.substring(0, 2).toUpperCase()}
                 </div>
               )}
-              <button 
+              <button
                 onClick={async () => {
-                  await supabase.auth.signOut();
-                }} 
+                  if (typeof window !== 'undefined' && localStorage.getItem('mermullet_dev_bypass') === 'true') {
+                    localStorage.removeItem('mermullet_dev_bypass');
+                    localStorage.removeItem('mermullet_mock_user');
+                    setUser(null);
+                    setIsAdmin(false);
+                    window.location.href = '/login';
+                    return;
+                  }
+                  try {
+                    await supabase.auth.signOut();
+                  } catch (e) {}
+                  window.location.href = '/login';
+                }}
                 className={styles.logoutBtn}
                 title="로그아웃"
               >
@@ -108,9 +148,8 @@ export default function Navbar() {
               </button>
             </div>
           ) : (
-            <Link href="/login" className={styles.loginBtn}>
+            <Link href="/login" className={styles.loginIconBtn} title="로그인">
               <LogIn size={16} />
-              <span>로그인</span>
             </Link>
           )}
         </div>

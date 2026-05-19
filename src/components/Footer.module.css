@@ -1,6 +1,6 @@
 .footer {
-  background-color: #06070a;
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  background-color: var(--bg-secondary);
+  border-top: 1px solid rgba(90, 75, 58, 0.08);
   padding: 64px 0 40px 0;
   color: var(--text-secondary);
   font-size: 14px;
@@ -22,23 +22,23 @@
   font-family: var(--font-serif);
   font-size: 22px;
   font-weight: 700;
-  color: var(--text-primary);
+  color: var(--accent-dark);
   margin-bottom: 12px;
 }
 
 .logoGold {
-  color: var(--accent-gold);
+  color: var(--accent-gold-hover);
   font-style: italic;
 }
 
 .tagline {
   line-height: 1.6;
-  color: var(--text-muted);
+  color: var(--text-secondary);
 }
 
 .divider {
   height: 1px;
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(90, 75, 58, 0.06);
   margin-bottom: 32px;
 }
 
@@ -54,7 +54,7 @@
   flex-direction: column;
   gap: 6px;
   line-height: 1.5;
-  color: var(--text-muted);
+  color: var(--text-secondary);
 }
 
 .copyright {

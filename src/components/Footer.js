@@ -6,10 +6,10 @@ export default function Footer() {
       <div className={styles.container}>
         <div className={styles.brand}>
           <div className={styles.logo}>
-            <span className={styles.logoGold}>Mermullet</span> Hotel
+            <span className={styles.logoGold}>Stay in</span> Soft Light
           </div>
           <p className={styles.tagline}>
-            영혼을 깨우는 파도 소리와 최고의 품격, 럭셔리한 서비스로 여러분의 소중한 휴식을 더욱 특별하게 만듭니다.
+            자연의 온기와 빛으로 채워진, 오직 당신만을 위한 조용한 쉼의 공간입니다.
           </p>
         </div>
         

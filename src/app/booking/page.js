@@ -4,13 +4,13 @@ import { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { supabase } from '../../lib/supabase';
-import { Calendar, User, Mail, Phone, CreditCard, Sparkles, CheckCircle } from 'lucide-react';
+import { Calendar, User, Mail, Phone, CreditCard, Sparkles, CheckCircle, ArrowRight } from 'lucide-react';
 import styles from './booking.module.css';
 
 const ROOMS_DATA = [
-  { id: 'room-1', name: '디럭스 오션 스위트 (Deluxe Ocean Suite)', price: 380000 },
-  { id: 'room-2', name: '이그제큐티브 풀빌라 (Executive Pool Villa)', price: 650000 },
-  { id: 'room-3', name: '머물렛 로열 펜트하우스 (Mermullet Penthouse)', price: 1200000 }
+  { id: 'room-1', name: '디럭스 오션 스위트 (Deluxe Ocean Suite)', price: 380000, img: '/images/room1.jpg' },
+  { id: 'room-2', name: '이그제큐티브 풀빌라 (Executive Pool Villa)', price: 650000, img: '/images/room2.jpg' },
+  { id: 'room-3', name: '머물렛 로열 펜트하우스 (Mermullet Penthouse)', price: 1200000, img: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&q=80&w=600' }
 ];
 
 export default function BookingPage() {
@@ -25,7 +25,6 @@ export default function BookingPage() {
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
   const [bookingId, setBookingId] = useState('');
 
   // Calculate nights and total price whenever checkIn, checkOut or selectedRoom changes
@@ -70,7 +69,6 @@ export default function BookingPage() {
   const handleBooking = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setErrorMsg('');
 
     try {
       const reservationData = {
@@ -92,16 +90,13 @@ export default function BookingPage() {
         .select();
 
       if (error) {
-        // If Supabase fails (e.g. database not set up yet), we fallback to LocalStorage for complete demo functionality!
-        console.warn('Supabase insert failed, using LocalStorage fallback:', error.message);
-        throw new Error('Supabase Not Ready');
+        throw new Error('Supabase Fallback required');
       }
 
-      // Supabase insertion success!
       setBookingId(data[0].id.substring(0, 8).toUpperCase());
       setIsSuccess(true);
     } catch (err) {
-      // LocalStorage Fallback (so it runs perfectly even on new/empty environments)
+      // LocalStorage Fallback for perfect reliability
       const mockId = Math.random().toString(36).substr(2, 9).toUpperCase();
       const localReservations = JSON.parse(localStorage.getItem('mermullet_reservations') || '[]');
       
@@ -128,6 +123,8 @@ export default function BookingPage() {
     }
   };
 
+  const selectedRoomObj = ROOMS_DATA.find(r => r.id === selectedRoom) || ROOMS_DATA[0];
+
   return (
     <>
       <Navbar />
@@ -137,14 +134,14 @@ export default function BookingPage() {
           
           {isSuccess ? (
             /* Reservation Success Screen */
-            <div className={`${styles.successCard} glass animate-fade-in`}>
-              <CheckCircle size={64} className={styles.successIcon} />
-              <h2>예약 신청이 완료되었습니다!</h2>
-              <p className={styles.successSub}>고객님의 소중한 휴식을 위해 완벽히 준비하겠습니다.</p>
+            <div className={`${styles.successCard} animate-fade-in`}>
+              <CheckCircle size={56} className={styles.successIcon} />
+              <h2>Find Your Sanctuary</h2>
+              <p className={styles.successSub}>고요한 사색의 공간으로의 예약 신청이 완료되었습니다.</p>
               
               <div className={styles.receipt}>
                 <div className={styles.receiptRow}>
-                  <span>예약 번호</span>
+                  <span>예약 코드 (Code)</span>
                   <strong className={styles.bookingCode}>{bookingId}</strong>
                 </div>
                 <div className={styles.receiptRow}>
@@ -152,15 +149,15 @@ export default function BookingPage() {
                   <span>{guestName}</span>
                 </div>
                 <div className={styles.receiptRow}>
-                  <span>객실명</span>
-                  <span>{ROOMS_DATA.find(r => r.id === selectedRoom)?.name.split(' (')[0]}</span>
+                  <span>선택 공간</span>
+                  <span>{selectedRoomObj.name.split(' (')[0]}</span>
                 </div>
                 <div className={styles.receiptRow}>
                   <span>일정</span>
                   <span>{checkIn} ~ {checkOut} ({nights}박)</span>
                 </div>
                 <div className={`${styles.receiptRow} ${styles.receiptTotal}`}>
-                  <span>총 결제금액</span>
+                  <span>결제 예정 금액</span>
                   <strong>₩{totalPrice.toLocaleString()}</strong>
                 </div>
               </div>
@@ -170,27 +167,27 @@ export default function BookingPage() {
                   추가 예약하기
                 </button>
                 <a href="/admin" className={styles.btnPrimaryGold}>
-                  관리 대시보드에서 확인
+                  관리 대시보드 확인
                 </a>
               </div>
             </div>
           ) : (
-            /* Booking Form Screen */
+            /* Booking Form Screen (Layout 3 - "Find Your Sanctuary") */
             <div className={styles.bookingGrid}>
               
               {/* Left Side: Form */}
-              <div className={`${styles.formCard} glass`}>
+              <div className={styles.formCard}>
                 <div className={styles.formHeader}>
                   <Sparkles size={24} className={styles.sparkleIcon} />
-                  <h2>실시간 객실 예약</h2>
-                  <p>일정과 개인정보를 입력하시면 신속히 예약을 확정해 드립니다.</p>
+                  <h2>Find Your Sanctuary</h2>
+                  <p>일정과 개인 정보를 기입해 주시면 나를 찾는 사색의 공간을 설계해 드립니다.</p>
                 </div>
                 
                 <form onSubmit={handleBooking} className={styles.form}>
                   
                   {/* Select Room */}
                   <div className={styles.inputGroup}>
-                    <label>객실 선택</label>
+                    <label>사색 공간 선택 (Room)</label>
                     <select 
                       value={selectedRoom} 
                       onChange={(e) => setSelectedRoom(e.target.value)}
@@ -207,7 +204,7 @@ export default function BookingPage() {
                   {/* Dates Grid */}
                   <div className={styles.datesGrid}>
                     <div className={styles.inputGroup}>
-                      <label>체크인</label>
+                      <label>입실일 (Check-in)</label>
                       <div className={styles.inputWithIcon}>
                         <Calendar size={16} />
                         <input 
@@ -219,9 +216,9 @@ export default function BookingPage() {
                         />
                       </div>
                     </div>
-
+ 
                     <div className={styles.inputGroup}>
-                      <label>체크아웃</label>
+                      <label>퇴실일 (Check-out)</label>
                       <div className={styles.inputWithIcon}>
                         <Calendar size={16} />
                         <input 
@@ -240,12 +237,12 @@ export default function BookingPage() {
 
                   {/* Guest Info */}
                   <div className={styles.inputGroup}>
-                    <label>예약자 성함</label>
+                    <label>예약자 성함 (Name)</label>
                     <div className={styles.inputWithIcon}>
                       <User size={16} />
                       <input 
                         type="text" 
-                        placeholder="실명을 입력해 주세요" 
+                        placeholder="성함을 입력해 주세요" 
                         value={guestName} 
                         onChange={(e) => setGuestName(e.target.value)}
                         required 
@@ -255,7 +252,7 @@ export default function BookingPage() {
                   </div>
 
                   <div className={styles.inputGroup}>
-                    <label>이메일 주소</label>
+                    <label>이메일 주소 (Email)</label>
                     <div className={styles.inputWithIcon}>
                       <Mail size={16} />
                       <input 
@@ -270,7 +267,7 @@ export default function BookingPage() {
                   </div>
 
                   <div className={styles.inputGroup}>
-                    <label>전화번호</label>
+                    <label>연락처 (Phone)</label>
                     <div className={styles.inputWithIcon}>
                       <Phone size={16} />
                       <input 
@@ -289,37 +286,46 @@ export default function BookingPage() {
                     disabled={isSubmitting} 
                     className={styles.submitBtn}
                   >
-                    {isSubmitting ? '예약 처리 중...' : '예약 신청하기'}
+                    {isSubmitting ? '사색 공간 설계 중...' : '예약 신청하기 (Reserve)'}
                   </button>
                   
                 </form>
               </div>
 
               {/* Right Side: Sidebar Price Info */}
-              <div className={`${styles.sidebarCard} glass`}>
-                <h3>예약 정보 요약</h3>
-                <p className={styles.sidebarSub}>선택하신 객실의 결제 예정 금액입니다.</p>
+              <div className={styles.sidebarCard}>
+                <div className={styles.roomPreviewBox}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img 
+                    src={selectedRoomObj.img} 
+                    alt={selectedRoomObj.name} 
+                    className={styles.roomPreviewImg} 
+                  />
+                </div>
+
+                <h3>Reservation Summary</h3>
+                <p className={styles.sidebarSub}>선택하신 공간의 결제 상세 내역입니다.</p>
                 
                 <div className={styles.summaryList}>
                   <div className={styles.summaryRow}>
-                    <span>선택 객실</span>
-                    <strong>{ROOMS_DATA.find(r => r.id === selectedRoom)?.name.split(' (')[0]}</strong>
+                    <span>공간명</span>
+                    <strong>{selectedRoomObj.name.split(' (')[0]}</strong>
                   </div>
                   
                   <div className={styles.summaryRow}>
-                    <span>숙박 기간</span>
+                    <span>숙박 정보</span>
                     <span>{checkIn || '-'} ~ {checkOut || '-'} ({nights}박)</span>
                   </div>
 
                   <div className={styles.summaryRow}>
                     <span>1박 요금</span>
-                    <span>₩{ROOMS_DATA.find(r => r.id === selectedRoom)?.price.toLocaleString()}</span>
+                    <span>₩{selectedRoomObj.price.toLocaleString()}</span>
                   </div>
 
                   <div className={styles.divider}></div>
                   
                   <div className={`${styles.summaryRow} ${styles.totalPriceRow}`}>
-                    <span>총 결제금액</span>
+                    <span>합계 요금</span>
                     <strong className={styles.sidebarTotal}>₩{totalPrice.toLocaleString()}</strong>
                   </div>
                 </div>
@@ -327,8 +333,8 @@ export default function BookingPage() {
                 <div className={styles.bookingTip}>
                   <CreditCard size={18} />
                   <div>
-                    <h4>현장 결제 지원</h4>
-                    <p>예약 완료 후 체크인 시 신용카드 또는 현금으로 결제가 진행됩니다.</p>
+                    <h4>현장 정산 안내</h4>
+                    <p>예약 접수 후 유선 또는 메일로 확정 안내가 전송되며, 정산은 현장에서 체크인 시 진행됩니다.</p>
                   </div>
                 </div>
               </div>

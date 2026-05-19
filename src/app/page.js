@@ -1,41 +1,50 @@
 import Link from 'next/link';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { Compass, Wind, Coffee, Award, Calendar, ChevronRight } from 'lucide-react';
+import {
+  Calendar,
+  ChevronRight,
+  Sparkles,
+  Compass,
+  Wind,
+  Coffee,
+  Heart,
+  ArrowRight
+} from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import styles from './page.module.css';
 
-// Fallback rooms list for visually complete loading
-const LUXURY_ROOMS = [
+// Pre-defined rooms list featuring user's actual room photographs
+const SOFT_LIGHT_ROOMS = [
   {
     id: 'room-1',
     name: 'Deluxe Ocean Suite',
     koreanName: '디럭스 오션 스위트',
-    description: '끝없는 푸른 바다가 통유리 너머로 펼쳐지는 격조 높은 스위트룸입니다. 최고급 킹 베드와 전용 욕조에서 품격 있는 시간을 만끽하세요.',
+    description: '따사로운 아침 햇살과 식물들이 가득한 미니멀 디자인의 저상형 플로어 침실입니다. 우아한 대형 골드 아치형 거울과 포근한 순면 리넨 베드로 자연 친화적 쉼을 선사합니다.',
     price: '380,000',
     capacity: 2,
-    image: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&q=80&w=1200',
-    amenities: ['Ocean View', 'King Bed', 'Private Balcony', 'Nespresso Machine']
+    image: '/images/room1.jpg',
+    amenities: ['Sunlit Room', 'Flooring Linen Bed', 'Large Gold Mirror', 'Lush Greenery']
   },
   {
     id: 'room-2',
-    name: 'Executive Private Pool Villa',
+    name: 'Executive Pool Villa',
     koreanName: '이그제큐티브 풀빌라',
-    description: '외부와의 시선이 완벽히 차단된 독채형 빌라로, 4계절 온수 풀과 아늑한 전용 정원을 갖추고 있어 최상의 프라이버시를 선사합니다.',
+    description: '대형 구형 한지 펜던트 조명이 뿜어내는 온화하고 부드러운 빛 속에서 누리는 최상의 안식처입니다. 주름진 화이트 퀼트 베딩과 정갈한 우드 바닥으로 동양적이고 감성적인 분위기를 자아냅니다.',
     price: '650,000',
     capacity: 4,
-    image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=1200',
-    amenities: ['Private Pool', 'Garden View', '2 King Beds', 'Kitchenette']
+    image: '/images/room2.jpg',
+    amenities: ['Paper Lantern Lamp', 'Wrinkled Cotton Duvet', 'Soft Sunshine Shadow', 'Wood Flooring']
   },
   {
     id: 'room-3',
-    name: 'Mermullet Royal Penthouse',
+    name: 'mermullet Penthouse',
     koreanName: '머물렛 로열 펜트하우스',
-    description: '호텔 최상층에 위치한 최고 등급의 펜트하우스입니다. 파노라마 바다 조망과 하이엔드 테라스, 24시간 버틀러 서비스가 제공됩니다.',
+    description: '360도 파노라마 바다 전경이 눈앞에 가득 찬 공간이자 호텔 최상층에 우뚝 선 펜트하우스입니다. 자연의 부드러운 그림자와 따뜻한 차분함이 극대화된 하이엔드 인테리어.',
     price: '1,200,000',
     capacity: 6,
-    image: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&q=80&w=1200',
-    amenities: ['Panoramic View', 'Luxury Jacuzzi', '24h Butler', 'Premium Wine Cellar']
+    image: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&q=80&w=1200',
+    amenities: ['360 Panorama View', 'Private Premium Spa', '24h Personal Butler', 'Eco Clay Accents']
   }
 ];
 
@@ -45,149 +54,242 @@ export default async function Home() {
     const { data, error } = await supabase
       .from('rooms')
       .select('*')
-      .order('price_per_night', { ascending: true });
+      .order('price', { ascending: true });
 
     if (error || !data || data.length === 0) {
       throw new Error(error?.message || 'Empty data');
     }
 
-    rooms = data.map((room) => ({
-      id: room.id,
-      name: room.name.includes(' (') ? room.name.split(' (')[1].replace(')', '') : room.name,
-      koreanName: room.name.split(' (')[0],
-      description: room.description,
-      price: Number(room.price_per_night).toLocaleString(),
-      capacity: room.capacity,
-      image: room.image_url,
-      amenities: room.amenities || []
-    }));
+    rooms = data.map((room) => {
+      let customImage = room.image_url;
+      let customDesc = room.description;
+      let customAmenities = ['Cozy Linen', 'Nature Material', 'Soft Light', 'Calm Relax'];
+
+      if (room.id === '7b4fd1c0-0000-0000-0000-000000000001' || room.name.includes('디럭스') || room.name.includes('Deluxe')) {
+        customImage = '/images/room1.jpg';
+        customDesc = SOFT_LIGHT_ROOMS[0].description;
+        customAmenities = SOFT_LIGHT_ROOMS[0].amenities;
+      } else if (room.id === '7b4fd1c0-0000-0000-0000-000000000002' || room.name.includes('풀빌라') || room.name.includes('Villa')) {
+        customImage = '/images/room2.jpg';
+        customDesc = SOFT_LIGHT_ROOMS[1].description;
+        customAmenities = SOFT_LIGHT_ROOMS[1].amenities;
+      } else if (room.id === '7b4fd1c0-0000-0000-0000-000000000003' || room.name.includes('펜트') || room.name.includes('Penthouse')) {
+        customImage = SOFT_LIGHT_ROOMS[2].image;
+        customDesc = SOFT_LIGHT_ROOMS[2].description;
+        customAmenities = SOFT_LIGHT_ROOMS[2].amenities;
+      }
+
+      return {
+        id: room.id,
+        name: room.name.includes(' (') ? room.name.split(' (')[1].replace(')', '') : room.name,
+        koreanName: room.name.split(' (')[0],
+        description: customDesc,
+        price: Number(room.price).toLocaleString(),
+        image: customImage,
+        amenities: customAmenities,
+        capacity: room.capacity || 2
+      };
+    });
   } catch (err) {
-    console.log('Supabase rooms fetch failed, using mock rooms:', err.message);
-    rooms = LUXURY_ROOMS;
+    rooms = SOFT_LIGHT_ROOMS;
   }
 
   return (
-    <>
+    <div className={styles.mainWrapper}>
       <Navbar />
-      
-      {/* 1. Hero Section */}
-      <section className={styles.hero}>
-        <div className={styles.heroOverlay}></div>
-        <div className={`${styles.heroContent} container animate-fade-in`}>
-          <p className={styles.heroSub}>WHERE LUXURY MEETS THE OCEAN</p>
-          <h1 className={styles.heroTitle}>
-            세상의 끝에서 발견하는<br />
-            <span>완벽한 품격과 휴식</span>
-          </h1>
-          <p className={styles.heroDesc}>
-            Mermullet Hotel은 에메랄드빛 바다가 눈앞에 펼쳐지는 고품격 리조트로,<br />
-            오직 당신만을 위해 설계된 맞춤형 럭셔리 서비스와 잊지 못할 힐링의 순간을 선사합니다.
-          </p>
-          <div className={styles.heroBtnGroup}>
-            <Link href="/booking" className={styles.btnGold}>
-              <Calendar size={18} />
-              <span>실시간 예약하기</span>
+
+      {/* 1. Hero Block (Breathtaking full-bleed warm lighting bedroom container) */}
+      <section className={styles.heroSection}>
+        <div className="container">
+          <div className={styles.heroBanner}>
+            <div className={styles.heroOverlay}></div>
+            <div className={styles.heroContent}>
+              <h1 className={styles.heroTitle}>mermullet</h1>
+              <p className={styles.heroSubtitle}>지금 가장 사색적인 쉼터</p>
+              <div className={styles.heroSublist}>
+                <span>ROOM DELUXE</span>
+                <span className={styles.dot}>•</span>
+                <span>SUITE</span>
+                <span className={styles.dot}>•</span>
+                <span>SPA VILLA</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 2. Texture of Silence Section */}
+      <section className={styles.silenceSection}>
+        <div className={`${styles.silenceGrid} container`}>
+          <div className={styles.silenceLeft}>
+            <p className={styles.metaLabel}>OUR PHILOSOPHY</p>
+            <h2 className={styles.silenceTitle}>Texture of Silence</h2>
+            <p className={styles.silenceDesc}>
+              조용히 나를 만나는 고요 속으로 초대합니다. 따뜻하게 데워진 찻잔의 온기를 느끼고,
+              창틈으로 들어오는 은은한 햇살의 흐름을 바라보며 호흡을 가다듬어 보세요.
+              머물렛은 오롯이 비워진 공간 속에서 자연의 질감들을 마주하며 사색을 채울 수 있도록 돕습니다.
+            </p>
+
+            <div className={styles.silenceStats}>
+              <div className={styles.statCol}>
+                <span className={styles.statNum}>01</span>
+                <span className={styles.statName}>MEDITATION</span>
+              </div>
+              <div className={styles.statCol}>
+                <span className={styles.statNum}>02</span>
+                <span className={styles.statName}>CRAFTS</span>
+              </div>
+              <div className={styles.statCol}>
+                <span className={styles.statNum}>03</span>
+                <span className={styles.statName}>SILENCE</span>
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.silenceRight}>
+            <div className={styles.shadowCard}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&q=80&w=600"
+                alt="Sunlight shadows on warm textured clay wall"
+                className={styles.shadowImg}
+              />
+              <div className={styles.shadowFloatingTag}>
+                <h4>mermullet</h4>
+                <p>자연과 공간이 건네는 가장 편안한 침묵</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Experience the Light Grid (Majestic Asymmetrical Layout) */}
+      <section className={styles.gallerySection}>
+        <div className="container">
+          <div className={styles.galleryHeader}>
+            <h2 className={styles.galleryMainTitle}>Experience the Light</h2>
+            <Link href="/booking" className={styles.viewAllLink}>
+              <span>View All Spaces</span>
+              <ArrowRight size={14} />
             </Link>
-            <a href="#rooms" className={styles.btnOutline}>
-              <span>객실 둘러보기</span>
-              <ChevronRight size={16} />
-            </a>
           </div>
-        </div>
-      </section>
 
-      {/* 2. Premium Services / Features */}
-      <section className={styles.services}>
-        <div className="container">
-          <div className={styles.sectionHeader}>
-            <p className={styles.sectionSub}>EXCLUSIVE VALUE</p>
-            <h2 className={styles.sectionTitle}>Mermullet만의 특별한 가치</h2>
-          </div>
-          
-          <div className={styles.servicesGrid}>
-            <div className={styles.serviceCard}>
-              <div className={styles.iconBox}>
-                <Compass size={28} />
+          <div className={styles.galleryGrid}>
+            {/* Left Big Column */}
+            <div className={styles.galleryLeftCol}>
+              <div className={styles.galleryItemCard}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/images/room1.jpg" alt="Morning Light Suite" className={styles.galleryItemImg} />
+                <div className={styles.itemOverlay}>
+                  <div className={styles.overlayText}>
+                    <h3>Morning Light Suite</h3>
+                    <p>따사로운 아침 햇살과 식물들이 가득한 안식처</p>
+                  </div>
+                  <Link href={`/booking?room=${rooms[0]?.id || 'room-1'}`} className={styles.overlayBtn}>
+                    Book this Space
+                  </Link>
+                </div>
               </div>
-              <h3>프라이빗 도슨트 & 투어</h3>
-              <p>호텔 주변의 빼어난 자연 경관과 유적지를 전문가의 친절한 스토리텔링과 함께 투어합니다.</p>
             </div>
-            
-            <div className={styles.serviceCard}>
-              <div className={styles.iconBox}>
-                <Wind size={28} />
-              </div>
-              <h3>오션 브리즈 스파</h3>
-              <p>파도 소리를 들으며 몸과 마음을 치유하는 테라피스트의 프리미엄 맞춤형 오가닉 아로마 스파.</p>
-            </div>
-            
-            <div className={styles.serviceCard}>
-              <div className={styles.iconBox}>
-                <Coffee size={28} />
-              </div>
-              <h3>파인 다이닝 & 라운지</h3>
-              <p>미슐랭 스타 셰프들이 지역 특산 식자재로 선보이는 창의적이고 감각적인 고메 요리.</p>
-            </div>
-            
-            <div className={styles.serviceCard}>
-              <div className={styles.iconBox}>
-                <Award size={28} />
-              </div>
-              <h3>24시간 버틀러 서비스</h3>
-              <p>체크인 순간부터 체크아웃까지, 완벽한 편안함을 위해 모든 일정을 케어해 드립니다.</p>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* 3. Rooms Showcase */}
-      <section id="rooms" className={styles.rooms}>
-        <div className="container">
-          <div className={styles.sectionHeader}>
-            <p className={styles.sectionSub}>LUXURIOUS ACCOMMODATIONS</p>
-            <h2 className={styles.sectionTitle}>품격이 살아있는 객실</h2>
-          </div>
-          
-          <div className={styles.roomsGrid}>
-            {rooms.map((room) => (
-              <div key={room.id} className={`${styles.roomCard} glass`}>
-                <div className={styles.roomImgBox}>
+            {/* Right Asymmetrical Column */}
+            <div className={styles.galleryRightCol}>
+              {/* Top Horizontal Row */}
+              <div className={`${styles.galleryItemCard} ${styles.horizontalCard}`}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/images/room2.jpg" alt="Deep Forest Cabin" className={styles.galleryItemImg} />
+                <div className={styles.itemOverlay}>
+                  <div className={styles.overlayText}>
+                    <h3>Deep Forest Cabin</h3>
+                    <p>대형 구형 한지 조명이 내뿜는 고요한 쉼</p>
+                  </div>
+                  <Link href={`/booking?room=${rooms[1]?.id || 'room-2'}`} className={styles.overlayBtn}>
+                    Book this Space
+                  </Link>
+                </div>
+              </div>
+
+              {/* Bottom Twin Columns */}
+              <div className={styles.twinGridRow}>
+                <div className={styles.galleryItemCard}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={room.image} alt={room.name} className={styles.roomImg} />
-                  <div className={styles.priceTag}>
-                    ₩{room.price} <span className={styles.priceUnit}>/ 1박</span>
+                  <img
+                    src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=400"
+                    alt="Cozy Bedding details"
+                    className={styles.galleryItemImg}
+                  />
+                  <div className={styles.itemLabelOverlay}>
+                    <span>BEDDING DETAILS</span>
                   </div>
                 </div>
-                
-                <div className={styles.roomInfo}>
-                  <div className={styles.roomTitleBox}>
-                    <h3>{room.koreanName}</h3>
-                    <span className={styles.engName}>{room.name}</span>
-                  </div>
-                  
-                  <p className={styles.roomDesc}>{room.description}</p>
-                  
-                  <div className={styles.amenities}>
-                    {room.amenities.map((amenity, i) => (
-                      <span key={i} className={styles.amenityBadge}>{amenity}</span>
-                    ))}
-                  </div>
-                  
-                  <div className={styles.cardFooter}>
-                    <span className={styles.capacityText}>기준 인원: {room.capacity}인</span>
-                    <Link href={`/booking?room=${room.id}`} className={styles.cardBtn}>
-                      <span>예약하기</span>
-                      <ChevronRight size={14} />
-                    </Link>
+
+                <div className={styles.galleryItemCard}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="https://images.unsplash.com/photo-1612196808214-b8e1d6145a8c?auto=format&fit=crop&q=80&w=400"
+                    alt="Ceramic vase aesthetic detail"
+                    className={styles.galleryItemImg}
+                  />
+                  <div className={styles.itemLabelOverlay}>
+                    <span>CERAMIC DESIGN</span>
                   </div>
                 </div>
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </section>
-      
+
+      {/* 4. Reserve Form Card Section */}
+      <section className={styles.reservationSection}>
+        <div className="container">
+          <div className={`${styles.reservationContainer} glass`}>
+            {/* Form Column */}
+            <div className={styles.formCol}>
+              <h2 className={styles.formTitle}>예약하기</h2>
+              <p className={styles.formSubtitle}>원하시는 사색 공간에서 당신만의 쉼을 찾으세요.</p>
+
+              <form action="/booking" method="GET" className={styles.quickForm}>
+                <div className={styles.formRow}>
+                  <div className={styles.formField}>
+                    <label>CHECK IN</label>
+                    <input type="date" name="checkIn" defaultValue="2026-06-01" required />
+                  </div>
+                  <div className={styles.formField}>
+                    <label>CHECK OUT</label>
+                    <input type="date" name="checkOut" defaultValue="2026-06-02" required />
+                  </div>
+                </div>
+
+                <div className={styles.formField} style={{ marginTop: '20px' }}>
+                  <label>SANCTUARY</label>
+                  <select name="room" required>
+                    {rooms.map((r) => (
+                      <option key={r.id} value={r.id}>{r.koreanName} ({r.name})</option>
+                    ))}
+                  </select>
+                </div>
+
+                <button type="submit" className={styles.submitReserveBtn}>
+                  Find Your Sanctuary
+                </button>
+              </form>
+            </div>
+
+            {/* Candle Image Column */}
+            <div className={styles.candleCol}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="https://images.unsplash.com/photo-1548048026-5a1a941d93d3?auto=format&fit=crop&q=80&w=600"
+                alt="Warm single burning candle on wooden holder with linen towels"
+                className={styles.candleImg}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
       <Footer />
-    </>
+    </div>
   );
 }

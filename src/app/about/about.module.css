@@ -1,0 +1,178 @@
+.wrapper {
+  background-color: var(--bg-primary);
+  color: var(--accent-dark);
+  padding-bottom: 120px;
+}
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url('https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?auto=format&fit=crop&q=80&w=1600'); /* Peaceful Luxury Hotel lobby */
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+}
+
+.heroOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(90, 75, 58, 0.45);
+  z-index: 1;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+  color: #FFFDF9;
+  max-width: 700px;
+  padding: 0 24px;
+}
+
+.heroSub {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  color: var(--bg-primary);
+}
+
+.heroTitle {
+  font-family: var(--font-serif);
+  font-size: clamp(32px, 5vw, 54px);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.section {
+  padding: 100px 0;
+}
+
+.introGrid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.introLeft h2 {
+  font-family: var(--font-serif);
+  font-size: 36px;
+  font-weight: 500;
+  margin-bottom: 24px;
+  line-height: 1.25;
+}
+
+.introLeft p {
+  font-size: 15px;
+  line-height: 1.85;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+}
+
+.introRight {
+  position: relative;
+}
+
+.introImgBox {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50% 50% 0 0; /* Classical arch shape */
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(90, 75, 58, 0.08);
+}
+
+.introImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Facilities grid */
+.facGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.facCard {
+  background: #FFFDF9;
+  border: 1px solid rgba(90, 75, 58, 0.06);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.facCard:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(90, 75, 58, 0.15);
+}
+
+.facImgBox {
+  width: 100%;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+}
+
+.facImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.facCard:hover .facImg {
+  transform: scale(1.04);
+}
+
+.facInfo {
+  padding: 28px;
+}
+
+.facInfo h3 {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.facInfo p {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+/* Map section */
+.mapWrapper {
+  margin-top: 40px;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(90, 75, 58, 0.08);
+  aspect-ratio: 21/9;
+}
+
+@media (max-width: 820px) {
+  .introGrid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .facGrid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .mapWrapper {
+    aspect-ratio: 16/10;
+  }
+}

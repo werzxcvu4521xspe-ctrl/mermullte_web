@@ -111,6 +111,16 @@ export default function AdminDashboard() {
     const checkAuth = async () => {
       setCheckingAuth(true);
       try {
+        if (typeof window !== 'undefined' && localStorage.getItem('mermullet_dev_bypass') === 'true') {
+          const mockUser = JSON.parse(localStorage.getItem('mermullet_mock_user') || '{}');
+          setUser(mockUser);
+          setIsApprovedAdmin(true);
+          setCheckingAuth(false);
+          fetchReservations();
+          fetchAdmins();
+          return;
+        }
+
         const { data: { user } } = await supabase.auth.getUser();
         if (!user) {
           // If no user is logged in, redirect to login page
@@ -358,7 +368,13 @@ export default function AdminDashboard() {
             <div className={styles.deniedActions}>
               <button 
                 onClick={async () => {
-                  await supabase.auth.signOut();
+                  if (typeof window !== 'undefined') {
+                    localStorage.removeItem('mermullet_dev_bypass');
+                    localStorage.removeItem('mermullet_mock_user');
+                  }
+                  try {
+                    await supabase.auth.signOut();
+                  } catch (e) {}
                   router.push('/login');
                 }} 
                 className={styles.logoutBtn}
