@@ -13,7 +13,7 @@
   justify-content: center;
   background-image: url('/images/dining.jpg'); /* Beautiful warm dining room */
   background-size: cover;
-  background-position: center;
+  background-position: center bottom;
   text-align: center;
 }
 
