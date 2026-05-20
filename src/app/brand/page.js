@@ -38,7 +38,7 @@ export default function BrandPage() {
             <div className={styles.circleMask}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img 
-                src="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=600" 
+                src="/images/menu.jpg" 
                 alt="Brand mood texture" 
                 className={styles.circleImg}
               />

@@ -21,7 +21,7 @@
   height: clamp(480px, 68vh, 760px);
   border-radius: 8px;
   overflow: hidden;
-  background-image: url('/images/room1.jpg');
+  background-image: url('/images/room2.jpg');
   background-size: cover;
   background-position: center;
   display: flex;

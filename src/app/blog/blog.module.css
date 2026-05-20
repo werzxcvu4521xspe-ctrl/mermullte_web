@@ -11,7 +11,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url('https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&q=80&w=1600'); /* Warm aesthetic shadows and candles */
+  background-image: url('/images/dining.jpg'); /* Beautiful warm dining room */
   background-size: cover;
   background-position: center;
   text-align: center;

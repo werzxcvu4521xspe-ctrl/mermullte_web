@@ -12,7 +12,7 @@ const EXPERIENCES = [
     desc: '이슬 머금은 아침 편백나무 숲길을 거닐며, 흙냄새와 싱그러운 바람 소리를 호흡으로 들이마시는 프라이빗 아침 숲 명상 프로그램입니다.',
     schedule: '매일 오전 07:30 - 08:30 (60분)',
     price: '30,000',
-    img: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=600'
+    img: '/images/lamps.jpg'
   },
   {
     id: 'exp-2',
@@ -22,7 +22,7 @@ const EXPERIENCES = [
     desc: '자연 채광 아래 서서히 차오르는 다관의 따스한 열기를 매만지며, 깊이 우려낸 차 한 잔을 통해 조용히 내면의 목소리에 집중하는 차회 프로그램입니다.',
     schedule: '매주 화/목/토 오후 03:00 - 04:30 (90분)',
     price: '50,000',
-    img: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=600'
+    img: '/images/room1.jpg'
   },
   {
     id: 'exp-3',
@@ -32,7 +32,7 @@ const EXPERIENCES = [
     desc: '투박한 흙더미를 손가락 온기로 조용히 어루만지고 늘려가며 나만의 고유한 찻잔과 식기를 빚어내는 차분한 촉각의 워크숍입니다.',
     schedule: '매주 금/일 오전 10:30 - 12:30 (120분)',
     price: '70,000',
-    img: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=600'
+    img: '/images/menu.jpg'
   }
 ];
 

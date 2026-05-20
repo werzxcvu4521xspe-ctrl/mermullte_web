@@ -42,7 +42,7 @@ export default function AboutPage() {
             <div className={styles.introImgBox}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img 
-                src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=600" 
+                src="/images/room1.jpg" 
                 alt="Minimal organic hotel details" 
                 className={styles.introImg}
               />
@@ -65,7 +65,7 @@ export default function AboutPage() {
               <div className={styles.facImgBox}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img 
-                  src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=600" 
+                  src="/images/dining.jpg" 
                   alt="Spa Room" 
                   className={styles.facImg}
                 />
@@ -81,7 +81,7 @@ export default function AboutPage() {
               <div className={styles.facImgBox}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img 
-                  src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=600" 
+                  src="/images/lamps.jpg" 
                   alt="Tea Lounge" 
                   className={styles.facImg}
                 />
@@ -97,7 +97,7 @@ export default function AboutPage() {
               <div className={styles.facImgBox}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img 
-                  src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&q=80&w=600" 
+                  src="/images/menu.jpg" 
                   alt="Clay Library" 
                   className={styles.facImg}
                 />
