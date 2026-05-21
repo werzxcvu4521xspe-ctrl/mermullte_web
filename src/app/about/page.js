@@ -23,7 +23,7 @@ export default function AboutPage() {
         <div className={`${styles.introGrid} container`}>
           <div className={styles.introLeft}>
             <p className={styles.heroSub}>THE ORIGIN</p>
-            <h2>교통의 허리 대전에서,<br />쉼의 첫걸음을 내딛다.</h2>
+            <h2>스쳐가던 대전역 너머,<br />쉼의 첫걸음을 내딛다.</h2>
             <p>
               머물렛의 이 가슴 설레는 여정은 대한민국의 허리이자 교통의 중심지인 '대전'에서 첫발을 내딛습니다. 
               대전은 서울에서도, 부산에서도, 광주에서도 KTX를 타면 1시간 남짓이면 닿을 수 있는 가장 가깝고 편리한 도시입니다.

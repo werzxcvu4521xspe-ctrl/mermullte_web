@@ -31,7 +31,7 @@
   position: relative;
   z-index: 2;
   color: #FFFDF9;
-  max-width: 700px;
+  max-width: 900px;
   padding: 0 24px;
 }
 
@@ -46,9 +46,17 @@
 
 .heroTitle {
   font-family: var(--font-serif);
-  font-size: clamp(32px, 5vw, 54px);
+  font-size: clamp(28px, 5vw, 54px);
   font-weight: 500;
   line-height: 1.2;
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .heroTitle {
+    white-space: normal;
+    word-break: keep-all;
+  }
 }
 
 .section {

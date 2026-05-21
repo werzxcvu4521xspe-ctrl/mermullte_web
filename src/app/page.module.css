@@ -6,7 +6,7 @@
 .mainWrapper {
   background-color: var(--bg-primary);
   color: var(--accent-dark);
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* 1. Hero Block (Breathtaking wide banner container) */
