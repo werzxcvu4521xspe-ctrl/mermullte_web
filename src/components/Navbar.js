@@ -79,8 +79,9 @@ export default function Navbar() {
   return (
     <header className={styles.header}>
       <div className={styles.container}>
-        <Link href="/" className={styles.logo}>
-          mermullet
+        <Link href="/" className={styles.logoContainer}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/images/logo.png" alt="mermullet" className={styles.logoImg} />
         </Link>
 
         <nav className={styles.nav}>
