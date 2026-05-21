@@ -16,37 +16,37 @@ import styles from './page.module.css';
 import fs from 'fs';
 import path from 'path';
 
-// Pre-defined rooms list featuring user's actual room photographs
+// Pre-defined rooms list featuring user's actual room photographs mapped to Cave & Daejeon themes
 const SOFT_LIGHT_ROOMS = [
   {
     id: 'room-1',
-    name: 'Deluxe Ocean Suite',
-    koreanName: '디럭스 오션 스위트',
-    description: '따사로운 아침 햇살과 식물들이 가득한 미니멀 디자인의 저상형 플로어 침실입니다. 우아한 대형 골드 아치형 거울과 포근한 순면 리넨 베드로 자연 친화적 쉼을 선사합니다.',
+    name: 'Morning Light Cave Suite',
+    koreanName: '아침 햇살의 동굴 스위트',
+    description: '따사로운 아침 햇살과 식물들이 가득한 미니멀 디자인의 저상형 플로어 침실입니다. 흙벽의 포근한 질감과 우드, 돌의 조화로 태초의 동굴과 같은 온전하고 아늑한 쉼을 선사합니다.',
     price: '380,000',
     capacity: 2,
     image: '/images/room1.jpg',
-    amenities: ['Sunlit Room', 'Flooring Linen Bed', 'Large Gold Mirror', 'Lush Greenery']
+    amenities: ['Sunlit Room', 'Clay & Stone Wall', 'Linen Floor Bed', 'Cozy Greenery']
   },
   {
     id: 'room-2',
-    name: 'Executive Pool Villa',
-    koreanName: '이그제큐티브 풀빌라',
-    description: '대형 구형 한지 펜던트 조명이 뿜어내는 온화하고 부드러운 빛 속에서 누리는 최상의 안식처입니다. 주름진 화이트 퀼트 베딩과 정갈한 우드 바닥으로 동양적이고 감성적인 분위기를 자아냅니다.',
+    name: 'Deep Silence Local Villa',
+    koreanName: '깊은 침묵의 로컬 풀빌라',
+    description: '대형 구형 한지 펜던트 조명이 뿜어내는 온화하고 부드러운 빛 속에서 누리는 최상의 안식처입니다. 대전의 열정적인 창작자들이 빚어낸 따뜻한 공예 소품들과 조용한 족욕 텁(Tub)이 몸의 긴장을 무장해제합니다.',
     price: '650,000',
     capacity: 4,
     image: '/images/room2.jpg',
-    amenities: ['Paper Lantern Lamp', 'Wrinkled Cotton Duvet', 'Soft Sunshine Shadow', 'Wood Flooring']
+    amenities: ['Paper Lantern Lamp', 'Local Creator Decor', 'Warm Footbath Tub', 'Aromatic Silence']
   },
   {
     id: 'room-3',
-    name: 'mermullet Penthouse',
-    koreanName: '머물렛 로열 펜트하우스',
-    description: '360도 파노라마 바다 전경이 눈앞에 가득 찬 공간이자 호텔 최상층에 우뚝 선 펜트하우스입니다. 자연의 부드러운 그림자와 따뜻한 차분함이 극대화된 하이엔드 인테리어.',
+    name: 'mermullet Cave Penthouse',
+    koreanName: '머물렛 로열 동굴 펜트하우스',
+    description: '인공적인 장식을 배제하고 순수한 자연의 재료인 나무, 흙, 돌, 철을 사용하여 원초적인 아늑함을 극대화한 최고급 동굴 펜트하우스입니다. 고소한 대전의 빵 향기와 따뜻한 차 한 잔으로 마음의 부피를 키워 보세요.',
     price: '1,200,000',
     capacity: 6,
     image: '/images/dining.jpg',
-    amenities: ['360 Panorama View', 'Private Premium Spa', '24h Personal Butler', 'Eco Clay Accents']
+    amenities: ['Bread Room Service', 'Primitive Clay Spa', 'Natural Timber Logs', 'Warm Tea Ceremony']
   }
 ];
 
@@ -137,13 +137,13 @@ export default async function Home() {
             <div className={styles.heroOverlay}></div>
             <div className={styles.heroContent}>
               <h1 className={styles.heroTitle}>mermullet</h1>
-              <p className={styles.heroSubtitle}>지금 가장 사색적인 쉼터</p>
+              <p className={styles.heroSubtitle}>대전에서 만나는 현대적 동굴, 온전한 비일상의 안식</p>
               <div className={styles.heroSublist}>
-                <span>ROOM DELUXE</span>
+                <span>COZY CAVE</span>
                 <span className={styles.dot}>•</span>
-                <span>SUITE</span>
+                <span>BAKERY SCENT</span>
                 <span className={styles.dot}>•</span>
-                <span>SPA VILLA</span>
+                <span>FOOT BATH</span>
               </div>
             </div>
           </div>
@@ -157,23 +157,23 @@ export default async function Home() {
             <p className={styles.metaLabel}>OUR PHILOSOPHY</p>
             <h2 className={styles.silenceTitle}>Texture of <i>Silence</i></h2>
             <p className={styles.silenceDesc}>
-              조용히 나를 만나는 고요 속으로 초대합니다. 따뜻하게 데워진 찻잔의 온기를 느끼고,
-              창틈으로 들어오는 은은한 햇살의 흐름을 바라보며 호흡을 가다듬어 보세요.
-              머물렛은 오롯이 비워진 공간 속에서 자연의 질감들을 마주하며 사색을 채울 수 있도록 돕습니다.
+              매일의 소음에서 벗어나 조용히 나를 마주하는 침묵의 안식처로 당신을 초대합니다.
+              근육이 쉴 때 비로소 자라나듯, 머물렛에서 머무는 하룻밤은 지쳤던 마음에 단단하고 아늑한 휴식을 선물합니다.
+              자연에서 온 순수한 흙벽, 따뜻한 우드, 투박한 돌의 질감을 매만지며 호흡을 편안히 가다듬어 보세요.
             </p>
 
             <div className={styles.silenceStats}>
               <div className={styles.statCol}>
                 <span className={styles.statNum}>01</span>
-                <span className={styles.statName}>MEDITATION</span>
+                <span className={styles.statName}>BREAD SCENT</span>
               </div>
               <div className={styles.statCol}>
                 <span className={styles.statNum}>02</span>
-                <span className={styles.statName}>CRAFTS</span>
+                <span className={styles.statName}>LOCAL ART</span>
               </div>
               <div className={styles.statCol}>
                 <span className={styles.statNum}>03</span>
-                <span className={styles.statName}>SILENCE</span>
+                <span className={styles.statName}>FOOT BATH</span>
               </div>
             </div>
           </div>
@@ -188,7 +188,7 @@ export default async function Home() {
               />
               <div className={styles.shadowFloatingTag}>
                 <h4>mermullet</h4>
-                <p>자연과 공간이 건네는 가장 편안한 침묵</p>
+                <p>세상에서 가장 아늑하고 따뜻한 진짜 휴식</p>
               </div>
             </div>
           </div>
@@ -199,7 +199,7 @@ export default async function Home() {
       <section className={styles.gallerySection}>
         <div className="container">
           <div className={styles.galleryHeader}>
-            <h2 className={styles.galleryMainTitle}>Experience the Light</h2>
+            <h2 className={styles.galleryMainTitle}>Sanctuary of Silence</h2>
             <Link href="/booking" className={styles.viewAllLink}>
               <span>View All Spaces</span>
               <ArrowRight size={14} />
@@ -211,11 +211,11 @@ export default async function Home() {
             <div className={styles.galleryLeftCol}>
               <div className={styles.galleryItemCard}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/images/room1.jpg" alt="Morning Light Suite" className={styles.galleryItemImg} />
+                <img src="/images/room1.jpg" alt="Morning Light Cave Suite" className={styles.galleryItemImg} />
                 <div className={styles.itemOverlay}>
                   <div className={styles.overlayText}>
-                    <h3>Morning Light Suite</h3>
-                    <p>따사로운 아침 햇살과 식물들이 가득한 안식처</p>
+                    <h3>Morning Light Cave Suite</h3>
+                    <p>따사로운 아침 햇살과 흙벽이 내어주는 원초적인 안식처</p>
                   </div>
                   <Link href={`/booking?room=${rooms[0]?.id || 'room-1'}`} className={styles.overlayBtn}>
                     Book this Space
@@ -229,11 +229,11 @@ export default async function Home() {
               {/* Top Horizontal Row */}
               <div className={`${styles.galleryItemCard} ${styles.horizontalCard}`}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/images/room2.jpg" alt="Deep Forest Cabin" className={styles.galleryItemImg} />
+                <img src="/images/room2.jpg" alt="Deep Silence Local Villa" className={styles.galleryItemImg} />
                 <div className={styles.itemOverlay}>
                   <div className={styles.overlayText}>
-                    <h3>Deep Forest Cabin</h3>
-                    <p>대형 구형 한지 조명이 내뿜는 고요한 쉼</p>
+                    <h3>Deep Silence Local Villa</h3>
+                    <p>구형 한지 조명이 뿜는 온화한 빛과 대전 로컬 크리에이터 소품의 아늑함</p>
                   </div>
                   <Link href={`/booking?room=${rooms[1]?.id || 'room-2'}`} className={styles.overlayBtn}>
                     Book this Space
@@ -251,7 +251,7 @@ export default async function Home() {
                     className={styles.galleryItemImg}
                   />
                   <div className={styles.itemLabelOverlay}>
-                    <span>LIGHTING DESIGN</span>
+                    <span>CLAY & LIGHT</span>
                   </div>
                 </div>
 
@@ -263,7 +263,7 @@ export default async function Home() {
                     className={styles.galleryItemImg}
                   />
                   <div className={styles.itemLabelOverlay}>
-                    <span>TABLE AESTHETICS</span>
+                    <span>BAKERY SCENT</span>
                   </div>
                 </div>
               </div>
@@ -279,7 +279,7 @@ export default async function Home() {
             {/* Form Column */}
             <div className={styles.formCol}>
               <h2 className={styles.formTitle}>예약하기</h2>
-              <p className={styles.formSubtitle}>원하시는 사색 공간에서 당신만의 쉼을 찾으세요.</p>
+              <p className={styles.formSubtitle}>대전을 가득 채우는 따뜻한 온기, 머물렛에서의 하룻밤을 준비하세요.</p>
 
               <form action="/booking" method="GET" className={styles.quickForm}>
                 <div className={styles.formRow}>
