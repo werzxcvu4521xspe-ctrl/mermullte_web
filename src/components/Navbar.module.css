@@ -3,7 +3,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 92px; /* Increased from 76px for premium space */
+  height: 86px; /* Reduced slightly for tight, balanced luxury spacing */
   z-index: 100;
   background: rgba(244, 239, 230, 0.85);
   /* 웜 크림 반투명 */
@@ -29,7 +29,7 @@
 .logoContainer {
   display: flex;
   align-items: center;
-  height: 72px; /* Set to 72px to make the logo look prominent and large */
+  height: 64px; /* Reduced by 20% from 80px for a refined, modern look */
   transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
@@ -88,7 +88,7 @@
 
 @media (max-width: 640px) {
   .logoContainer {
-    height: 52px; /* Scale down logo on mobile but keep it clearly readable */
+    height: 48px; /* Reduced by 20% for neat mobile alignment */
   }
 
   .navLink span {

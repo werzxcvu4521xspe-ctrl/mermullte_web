@@ -17,13 +17,13 @@ export default function Footer() {
         
         <div className={styles.meta}>
           <div className={styles.info}>
-            <p>Mermullet Hotel & Resort | 대표자: 장유찬</p>
-            <p>서울특별시 강남구 테헤란로 123 (역삼동) | 사업자등록번호: 123-45-67890</p>
-            <p>대표전화: 02-1234-5678 | 이메일: reserve@mermullet.com</p>
+            <p>Mermullet Stay (머물렛 스테이) | 대표자: 장유찬</p>
+            <p>대전광역시 중구 은행동 123 (성심당 도보 3분) | 사업자등록번호: 123-45-67890</p>
+            <p>대표전화: 042-123-4567 | 이메일: info@mermullet.com</p>
           </div>
           
           <p className={styles.copyright}>
-            &copy; {new Date().getFullYear()} Mermullet Hotel. All rights reserved.
+            &copy; {new Date().getFullYear()} Mermullet. All rights reserved.
           </p>
         </div>
       </div>

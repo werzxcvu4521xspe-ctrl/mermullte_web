@@ -66,7 +66,7 @@ export default async function Home() {
         { src: 'media__1779301254393.jpg', dest: 'yoga.jpg' },
         { src: 'media__1779301800096.jpg', dest: 'basket.jpg' },
         { src: 'media__1779301926135.jpg', dest: 'sunlight.jpg' },
-        { src: 'media__1779343840336.png', dest: 'logo.png' }
+        { src: 'media__1779344171237.png', dest: 'logo.png' }
       ];
       
       filesToCopy.forEach(item => {
