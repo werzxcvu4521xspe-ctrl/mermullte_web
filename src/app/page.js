@@ -64,7 +64,8 @@ export default async function Home() {
         { src: 'media__1779298911253.jpg', dest: 'lamps.jpg' },
         { src: 'media__1779298916447.jpg', dest: 'dining.jpg' },
         { src: 'media__1779301254393.jpg', dest: 'yoga.jpg' },
-        { src: 'media__1779301800096.jpg', dest: 'basket.jpg' }
+        { src: 'media__1779301800096.jpg', dest: 'basket.jpg' },
+        { src: 'media__1779301926135.jpg', dest: 'sunlight.jpg' }
       ];
       
       filesToCopy.forEach(item => {
@@ -153,7 +154,7 @@ export default async function Home() {
         <div className={`${styles.silenceGrid} container`}>
           <div className={styles.silenceLeft}>
             <p className={styles.metaLabel}>OUR PHILOSOPHY</p>
-            <h2 className={styles.silenceTitle}>Texture of Silence</h2>
+            <h2 className={styles.silenceTitle}>Texture of <i>Silence</i></h2>
             <p className={styles.silenceDesc}>
               조용히 나를 만나는 고요 속으로 초대합니다. 따뜻하게 데워진 찻잔의 온기를 느끼고,
               창틈으로 들어오는 은은한 햇살의 흐름을 바라보며 호흡을 가다듬어 보세요.

@@ -89,15 +89,15 @@
 
 /* 2. Texture of Silence Section */
 .silenceSection {
-  padding: 120px 0;
+  padding: 180px 0;
   background-color: var(--bg-primary);
 }
 
 .silenceGrid {
   display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: 80px;
-  align-items: center;
+  grid-template-columns: 1fr 1.2fr; /* Make image side larger for magazine feel */
+  gap: 100px;
+  align-items: flex-start; /* Top align for editorial look */
 }
 
 .silenceLeft {
@@ -105,20 +105,22 @@
 }
 
 .metaLabel {
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 700;
-  letter-spacing: 4px;
+  letter-spacing: 6px;
   color: var(--accent-gold-hover);
   text-transform: uppercase;
+  margin-top: 40px; /* Push down to align with image visually */
 }
 
 .silenceTitle {
   font-family: var(--font-serif);
-  font-size: clamp(34px, 4.5vw, 48px);
-  font-weight: 500;
+  font-size: clamp(48px, 6vw, 72px); /* Much larger for magazine feel */
+  font-weight: 400;
   color: var(--accent-dark);
-  line-height: 1.15;
-  margin: 20px 0 28px 0;
+  line-height: 1.1;
+  margin: 24px 0 36px 0;
+  letter-spacing: -1px;
 }
 
 .silenceDesc {
@@ -164,11 +166,12 @@
 .shadowCard {
   position: relative;
   width: 100%;
-  max-width: 440px;
-  height: 560px;
+  max-width: 520px; /* Larger image */
+  height: 680px; /* Taller image */
   border-radius: 4px;
   overflow: visible; /* To allow floating tag overlap */
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-lg);
+  margin-right: -40px; /* Pull out of container bounds slightly */
 }
 
 .shadowImg {
@@ -181,23 +184,24 @@
 
 .shadowFloatingTag {
   position: absolute;
-  bottom: 40px;
-  left: -40px;
-  background-color: var(--bg-secondary);
-  border: 1px solid rgba(90, 75, 58, 0.08);
-  padding: 24px 28px;
+  bottom: -30px; /* Overlap bottom */
+  left: -80px; /* Overlap heavily to the left */
+  background-color: #FFFDF9;
+  border: 1px solid rgba(90, 75, 58, 0.05);
+  padding: 32px 36px;
   border-radius: 4px;
-  box-shadow: var(--shadow-md);
-  max-width: 250px;
+  box-shadow: var(--shadow-lg);
+  max-width: 280px;
   z-index: 10;
 }
 
 .shadowFloatingTag h4 {
   font-family: var(--font-serif);
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--accent-dark);
-  margin-bottom: 6px;
+  margin-bottom: 8px;
+  letter-spacing: 1px;
 }
 
 .shadowFloatingTag p {
@@ -208,7 +212,7 @@
 
 /* 3. Experience the Light Grid (Asymmetric Editorial Layout) */
 .gallerySection {
-  padding: 100px 0;
+  padding: 160px 0; /* More breathing room */
   background-color: var(--bg-secondary); /* Alternating container color block */
 }
 
@@ -216,14 +220,15 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 48px;
+  margin-bottom: 64px; /* More space */
 }
 
 .galleryMainTitle {
   font-family: var(--font-serif);
-  font-size: clamp(30px, 4vw, 40px);
+  font-size: clamp(40px, 5vw, 56px); /* Larger */
   color: var(--accent-dark);
-  font-weight: 500;
+  font-weight: 400;
+  letter-spacing: -0.5px;
 }
 
 .viewAllLink {
@@ -236,18 +241,20 @@
   border-bottom: 1.5px solid rgba(142, 123, 99, 0.25);
   padding-bottom: 4px;
   transition: all 0.3s ease;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .viewAllLink:hover {
   color: var(--accent-dark);
   border-color: var(--accent-dark);
-  transform: translateX(3px);
+  transform: translateX(4px);
 }
 
 .galleryGrid {
   display: grid;
-  grid-template-columns: 1.15fr 1fr;
-  gap: 40px;
+  grid-template-columns: 1.2fr 1fr; /* Enhance asymmetry */
+  gap: 60px; /* More space between columns */
 }
 
 .galleryLeftCol {
