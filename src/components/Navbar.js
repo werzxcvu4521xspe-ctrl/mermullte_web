@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Hotel, Calendar, LayoutDashboard, LogOut, LogIn, Sparkles, Compass, BookOpen } from 'lucide-react';
+import { Hotel, Calendar, LayoutDashboard, LogOut, LogIn, Sparkles, Compass, BookOpen, Menu, X } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import styles from './Navbar.module.css';
 
@@ -11,6 +11,19 @@ export default function Navbar() {
   const pathname = usePathname();
   const [user, setUser] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Prevent scroll when mobile menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMenuOpen]);
 
   useEffect(() => {
     // Check initial user and verify admin rights
@@ -153,6 +166,59 @@ export default function Navbar() {
               <LogIn size={16} />
             </Link>
           )}
+
+          {/* Mobile Hamburger Toggle Button */}
+          <button 
+            className={styles.menuToggle} 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Toggle Menu"
+          >
+            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Drawer Sidebar Overlay */}
+      {isMenuOpen && (
+        <div 
+          className={styles.sidebarOverlay} 
+          onClick={() => setIsMenuOpen(false)} 
+        />
+      )}
+      
+      {/* Mobile Drawer Sidebar */}
+      <div className={`${styles.sidebar} ${isMenuOpen ? styles.sidebarOpen : ''}`}>
+        <div className={styles.sidebarHeader}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/images/logo.png" alt="mermullet" className={styles.sidebarLogo} />
+          <button className={styles.closeBtn} onClick={() => setIsMenuOpen(false)} aria-label="Close Menu">
+            <X size={20} />
+          </button>
+        </div>
+
+        <nav className={styles.sidebarNav}>
+          <Link href="/brand" className={`${styles.sidebarLink} ${pathname === '/brand' ? styles.sidebarActive : ''}`} onClick={() => setIsMenuOpen(false)}>
+            <span>브랜드 소개</span>
+          </Link>
+          <Link href="/about" className={`${styles.sidebarLink} ${pathname === '/about' ? styles.sidebarActive : ''}`} onClick={() => setIsMenuOpen(false)}>
+            <span>호텔 소개</span>
+          </Link>
+          <Link href="/experiences" className={`${styles.sidebarLink} ${pathname === '/experiences' ? styles.sidebarActive : ''}`} onClick={() => setIsMenuOpen(false)}>
+            <span>이벤트 & 경험</span>
+          </Link>
+          <Link href="/blog" className={`${styles.sidebarLink} ${pathname === '/blog' ? styles.sidebarActive : ''}`} onClick={() => setIsMenuOpen(false)}>
+            <span>블로그</span>
+          </Link>
+          {isAdmin && (
+            <Link href="/admin" className={`${styles.sidebarLink} ${pathname.startsWith('/admin') ? styles.sidebarActiveAdmin : ''}`} onClick={() => setIsMenuOpen(false)}>
+              <span>관리 대시보드</span>
+            </Link>
+          )}
+        </nav>
+
+        <div className={styles.sidebarFooter}>
+          <p className={styles.sidebarTagline}>자연의 온기와 빛으로 채워진 사색의 쉼</p>
+          <p className={styles.sidebarCopyright}>&copy; {new Date().getFullYear()} Mermullet. All rights reserved.</p>
         </div>
       </div>
     </header>
