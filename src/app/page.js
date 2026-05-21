@@ -60,7 +60,8 @@ export default async function Home() {
       const filesToCopy = [
         { src: 'media__1779298896802.jpg', dest: 'room2.jpg' },
         { src: 'media__1779298905323.jpg', dest: 'room1.jpg' },
-        { src: 'media__1779348099605.jpg', dest: 'menu.jpg' },
+        { src: 'media__1779350613776.jpg', dest: 'menu.jpg' },
+        { src: 'media__1779350886037.png', dest: 'about_bread.jpg' },
         { src: 'media__1779298911253.jpg', dest: 'lamps.jpg' },
         { src: 'media__1779298916447.jpg', dest: 'dining.jpg' },
         { src: 'media__1779301254393.jpg', dest: 'yoga.jpg' },

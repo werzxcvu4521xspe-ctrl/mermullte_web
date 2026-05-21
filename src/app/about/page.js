@@ -68,7 +68,7 @@ export default function AboutPage() {
               <div className={styles.facImgBox}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img 
-                  src="/images/menu.jpg" 
+                  src="/images/about_bread.jpg" 
                   alt="Bread Holy Land Daejeon" 
                   className={styles.facImg}
                 />
