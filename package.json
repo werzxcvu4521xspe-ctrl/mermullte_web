@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "ship": "git add . && git commit -m \"Update: $(date)\" && git push origin main"
+    "ship": "git add . && git commit -m \"Update: $(date)\" && git push origin main",
+    "watch-deploy": "node auto-push.js"
   },
   "dependencies": {
     "next": "^14.2.3",
